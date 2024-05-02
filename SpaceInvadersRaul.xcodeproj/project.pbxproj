@@ -15,6 +15,8 @@
 		C786CDE32BE3F48800847B9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C786CDE12BE3F48800847B9F /* Main.storyboard */; };
 		C786CDE52BE3F48A00847B9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C786CDE42BE3F48A00847B9F /* Assets.xcassets */; };
 		C786CDE82BE3F48A00847B9F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C786CDE62BE3F48A00847B9F /* LaunchScreen.storyboard */; };
+		C786CDF22BE3F73200847B9F /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C786CDF12BE3F73200847B9F /* MenuScene.sks */; };
+		C786CDF42BE3F75D00847B9F /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C786CDF32BE3F75D00847B9F /* MenuScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,9 @@
 		C786CDE22BE3F48800847B9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C786CDE42BE3F48A00847B9F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C786CDE72BE3F48A00847B9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C786CDF12BE3F73200847B9F /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
+		C786CDF32BE3F75D00847B9F /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		C786CDF52BE3FBDB00847B9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +64,10 @@
 		C786CDD62BE3F48800847B9F /* SpaceInvadersRaul */ = {
 			isa = PBXGroup;
 			children = (
+				C786CDF52BE3FBDB00847B9F /* Info.plist */,
+				C786CDF02BE3F59900847B9F /* Utils */,
+				C786CDEF2BE3F59200847B9F /* Controllers */,
+				C786CDEE2BE3F58900847B9F /* Scenes */,
 				C786CDD72BE3F48800847B9F /* AppDelegate.swift */,
 				C786CDD92BE3F48800847B9F /* GameScene.sks */,
 				C786CDDB2BE3F48800847B9F /* Actions.sks */,
@@ -69,6 +78,29 @@
 				C786CDE62BE3F48A00847B9F /* LaunchScreen.storyboard */,
 			);
 			path = SpaceInvadersRaul;
+			sourceTree = "<group>";
+		};
+		C786CDEE2BE3F58900847B9F /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				C786CDF12BE3F73200847B9F /* MenuScene.sks */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		C786CDEF2BE3F59200847B9F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C786CDF32BE3F75D00847B9F /* MenuScene.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		C786CDF02BE3F59900847B9F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -130,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C786CDE32BE3F48800847B9F /* Main.storyboard in Resources */,
+				C786CDF22BE3F73200847B9F /* MenuScene.sks in Resources */,
 				C786CDDA2BE3F48800847B9F /* GameScene.sks in Resources */,
 				C786CDE52BE3F48A00847B9F /* Assets.xcassets in Resources */,
 				C786CDE82BE3F48A00847B9F /* LaunchScreen.storyboard in Resources */,
@@ -145,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C786CDDE2BE3F48800847B9F /* GameScene.swift in Sources */,
+				C786CDF42BE3F75D00847B9F /* MenuScene.swift in Sources */,
 				C786CDE02BE3F48800847B9F /* GameViewController.swift in Sources */,
 				C786CDD82BE3F48800847B9F /* AppDelegate.swift in Sources */,
 			);
@@ -293,7 +327,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3S952AGH46;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpaceInvadersRaul/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -320,7 +356,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3S952AGH46;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpaceInvadersRaul/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
