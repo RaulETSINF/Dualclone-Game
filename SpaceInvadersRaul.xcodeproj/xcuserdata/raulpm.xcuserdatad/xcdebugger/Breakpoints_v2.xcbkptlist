@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "32F2CC28-BD82-43D5-BC9A-6D29B4D8698A"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C334DB91-EAD1-4F8C-9A61-9859EA8EDBC1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SpaceInvadersRaul/BleManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+            landmarkName = "peripheralManager(_:didReceiveWrite:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C334DB91-EAD1-4F8C-9A61-9859EA8EDBC1 - fd80367694914304"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SpaceInvadersRaul.BLEManager.peripheralManager(_: __C.CBPeripheralManager, didReceiveWrite: Swift.Array&lt;__C.CBATTRequest&gt;) -&gt; ()"
+                  moduleName = "SpaceInvadersRaul"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/raulpm/Xcode%20Projects/pr-ctica-2-dualclone-raul-piqueras-melero/SpaceInvadersRaul/BleManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "143"
+                  endingLineNumber = "143"
+                  offsetFromSymbolStart = "296">
+               </Location>
+               <Location
+                  uuid = "C334DB91-EAD1-4F8C-9A61-9859EA8EDBC1 - fd80367694914304"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SpaceInvadersRaul.BLEManager.peripheralManager(_: __C.CBPeripheralManager, didReceiveWrite: Swift.Array&lt;__C.CBATTRequest&gt;) -&gt; ()"
+                  moduleName = "SpaceInvadersRaul"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/raulpm/Xcode%20Projects/pr-ctica-2-dualclone-raul-piqueras-melero/SpaceInvadersRaul/BleManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "143"
+                  endingLineNumber = "143"
+                  offsetFromSymbolStart = "140">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7E63AE1D-0800-4659-9031-92BDE50D86B0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SpaceInvadersRaul/BleManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "peripheral(_:didUpdateValueFor:error:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7E63AE1D-0800-4659-9031-92BDE50D86B0 - 7478858ce0ad6ac3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SpaceInvadersRaul.BLEManager.peripheral(_: __C.CBPeripheral, didUpdateValueFor: __C.CBCharacteristic, error: Swift.Optional&lt;Swift.Error&gt;) -&gt; ()"
+                  moduleName = "SpaceInvadersRaul"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/raulpm/Xcode%20Projects/pr-ctica-2-dualclone-raul-piqueras-melero/SpaceInvadersRaul/BleManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
+                  offsetFromSymbolStart = "344">
+               </Location>
+               <Location
+                  uuid = "7E63AE1D-0800-4659-9031-92BDE50D86B0 - 7478858ce0ad6ac3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SpaceInvadersRaul.BLEManager.peripheral(_: __C.CBPeripheral, didUpdateValueFor: __C.CBCharacteristic, error: Swift.Optional&lt;Swift.Error&gt;) -&gt; ()"
+                  moduleName = "SpaceInvadersRaul"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/raulpm/Xcode%20Projects/pr-ctica-2-dualclone-raul-piqueras-melero/SpaceInvadersRaul/BleManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
+                  offsetFromSymbolStart = "88">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1D8E3499-0B18-497B-B36E-4521AEEF1F44"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SpaceInvadersRaul/BleManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "peripheral(_:didUpdateNotificationStateFor:error:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1D8E3499-0B18-497B-B36E-4521AEEF1F44 - d87d8701d9d73ab7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SpaceInvadersRaul.BLEManager.peripheral(_: __C.CBPeripheral, didUpdateNotificationStateFor: __C.CBCharacteristic, error: Swift.Optional&lt;Swift.Error&gt;) -&gt; ()"
+                  moduleName = "SpaceInvadersRaul"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/raulpm/Xcode%20Projects/pr-ctica-2-dualclone-raul-piqueras-melero/SpaceInvadersRaul/BleManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "264">
+               </Location>
+               <Location
+                  uuid = "1D8E3499-0B18-497B-B36E-4521AEEF1F44 - d87d8701d9d73ab7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SpaceInvadersRaul.BLEManager.peripheral(_: __C.CBPeripheral, didUpdateNotificationStateFor: __C.CBCharacteristic, error: Swift.Optional&lt;Swift.Error&gt;) -&gt; ()"
+                  moduleName = "SpaceInvadersRaul"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/raulpm/Xcode%20Projects/pr-ctica-2-dualclone-raul-piqueras-melero/SpaceInvadersRaul/BleManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "92">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E04EC617-EC9D-458E-92D4-8595FEC18358"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SpaceInvadersRaul/BleManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "Notification.Name"
+            landmarkType = "21">
+            <Locations>
+               <Location
+                  uuid = "E04EC617-EC9D-458E-92D4-8595FEC18358 - c650bebdfe68cb84"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.NSNotificationName.didReceiveProjectileData.unsafeMutableAddressor : __C.NSNotificationName"
+                  moduleName = "SpaceInvadersRaul"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/raulpm/Xcode%20Projects/pr-ctica-2-dualclone-raul-piqueras-melero/SpaceInvadersRaul/BleManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "156"
+                  endingLineNumber = "156"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "E04EC617-EC9D-458E-92D4-8595FEC18358 - ade17bf5b5aac77c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "one-time initialization function for didReceiveProjectileData"
+                  moduleName = "SpaceInvadersRaul"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/raulpm/Xcode%20Projects/pr-ctica-2-dualclone-raul-piqueras-melero/SpaceInvadersRaul/BleManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "156"
+                  endingLineNumber = "156"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "38542599-7146-46E6-BFCB-C55E11CEA256"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SpaceInvadersRaul/Controllers/SpaceInvadersScene.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "receivedProjectileData(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "08C3E277-BAFF-4B98-8612-BAFD40CB94AC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SpaceInvadersRaul/BleManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "sendProjectileData(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

@@ -2,70 +2,61 @@ import Foundation
 import SpriteKit
 import CoreBluetooth
 
-class MenuScene: SKScene, CBCentralManagerDelegate, CBPeripheralDelegate {
-    var centralManager: CBCentralManager!
-    var discoveredPeripheral: CBPeripheral?
+class MenuScene: SKScene {
     
-    let myServiceUUID = CBUUID(string: "1201FB7E-AA4B-4D45-9BC7-D527E1F7E784")
-    let myCharacteristicUUID = CBUUID(string: "29E79AF5-2457-40FF-92FE-FE5F299AAED3")
-
+    var bleManager: BLEManager!
+    
+    var scanButton: SKLabelNode!
+    var startGameButton: SKLabelNode!
+    
     override func didMove(to view: SKView) {
-        // Configuración de CBCentralManager
-        centralManager = CBCentralManager(delegate: self, queue: nil)
-    }
-
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        switch central.state {
-        case .poweredOn:
-            print("Bluetooth status is POWERED ON")
-            centralManager.scanForPeripherals(withServices: [myServiceUUID], options: nil)
-        default:
-            print("Bluetooth state: \(central.state)")
+        // Configurar BLEManager
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            bleManager = appDelegate.bleManager
         }
+        
+        // Crear el botón
+        scanButton = SKLabelNode(text: "Start Scanning")
+        scanButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        scanButton.fontSize = 24
+        scanButton.fontColor = SKColor.white
+        scanButton.name = "scanButton"
+        self.addChild(scanButton)
+        
+        
+        // Crear el botón para iniciar el juego
+        startGameButton = SKLabelNode(text: "Start Game")
+        startGameButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY - 50)
+        startGameButton.fontSize = 24
+        startGameButton.fontColor = SKColor.white
+        startGameButton.name = "startGameButton"
+        self.addChild(startGameButton)
+        
     }
-
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
-        // Guardar el periférico descubierto y detener el escaneo
-        discoveredPeripheral = peripheral
-        centralManager.stopScan()
-
-        // Configurar el delegado y conectar al periférico
-        peripheral.delegate = self
-        centralManager.connect(peripheral, options: nil)
-    }
-
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print("Connected to \(peripheral.identifier)")
-        // Descubrir servicios del periférico
-        peripheral.discoverServices([myServiceUUID])
-    }
-
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        if let services = peripheral.services {
-            for service in services {
-                if service.uuid == myServiceUUID {
-                    // Descubrir características del servicio
-                    peripheral.discoverCharacteristics([myCharacteristicUUID], for: service)
-                }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: self)
+            let touchedNode = self.atPoint(location)
+            
+            if touchedNode.name == "scanButton" {
+                bleManager.startScanning()
+            } else if touchedNode.name == "startGameButton" {
+                loadGameScene()
             }
         }
     }
-
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        if let characteristics = service.characteristics {
-            for characteristic in characteristics {
-                if characteristic.uuid == myCharacteristicUUID {
-                    // Leer valor o suscribirse a la característica
-                    peripheral.readValue(for: characteristic)
-                }
-            }
+    
+    
+    func loadGameScene() {
+        if let view = self.view {
+            let scene = SpaceInvadersScene(size: view.bounds.size)
+            scene.scaleMode = .resizeFill
+            let transition = SKTransition.flipHorizontal(withDuration: 0.5)
+            view.presentScene(scene, transition: transition)
         }
     }
-
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        if let data = characteristic.value {
-            // Procesar datos de la característica
-            print("Received data: \(data)")
-        }
-    }
+    
+    
 }
