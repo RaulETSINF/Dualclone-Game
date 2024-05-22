@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2CACE1BA2BFE7F9A00CD4844 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2CACE1B92BFE7F9A00CD4844 /* Explosion.sks */; };
 		2CE81A822BFD11E700F2034B /* BleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE81A812BFD11E700F2034B /* BleManager.swift */; };
 		2CE81A842BFD404300F2034B /* SpaceInvadersScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE81A832BFD404300F2034B /* SpaceInvadersScene.swift */; };
 		2CE81A862BFD40E400F2034B /* SpaceInvadersScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2CE81A852BFD40E400F2034B /* SpaceInvadersScene.sks */; };
@@ -23,7 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2CE81A812BFD11E700F2034B /* BleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BleManager.swift; path = SpaceInvadersRaul/BleManager.swift; sourceTree = SOURCE_ROOT; };
+		2CACE1B92BFE7F9A00CD4844 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
+		2CE81A812BFD11E700F2034B /* BleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BleManager.swift; path = SpaceInvadersRaul/Bluetooth/BleManager.swift; sourceTree = SOURCE_ROOT; };
 		2CE81A832BFD404300F2034B /* SpaceInvadersScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceInvadersScene.swift; sourceTree = "<group>"; };
 		2CE81A852BFD40E400F2034B /* SpaceInvadersScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SpaceInvadersScene.sks; sourceTree = "<group>"; };
 		C786CDD42BE3F48800847B9F /* SpaceInvadersRaul.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceInvadersRaul.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,6 +53,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2CACE1B82BFE7F4900CD4844 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				2CE81A812BFD11E700F2034B /* BleManager.swift */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
 		C786CDCB2BE3F48800847B9F = {
 			isa = PBXGroup;
 			children = (
@@ -70,9 +80,8 @@
 		C786CDD62BE3F48800847B9F /* SpaceInvadersRaul */ = {
 			isa = PBXGroup;
 			children = (
-				C786CDF62BE4039200847B9F /* ble */,
+				2CACE1B82BFE7F4900CD4844 /* Bluetooth */,
 				C786CDF52BE3FBDB00847B9F /* Info.plist */,
-				C786CDF02BE3F59900847B9F /* Utils */,
 				C786CDEF2BE3F59200847B9F /* Controllers */,
 				C786CDEE2BE3F58900847B9F /* Scenes */,
 				C786CDD72BE3F48800847B9F /* AppDelegate.swift */,
@@ -83,6 +92,7 @@
 				C786CDE12BE3F48800847B9F /* Main.storyboard */,
 				C786CDE42BE3F48A00847B9F /* Assets.xcassets */,
 				C786CDE62BE3F48A00847B9F /* LaunchScreen.storyboard */,
+				2CACE1B92BFE7F9A00CD4844 /* Explosion.sks */,
 			);
 			path = SpaceInvadersRaul;
 			sourceTree = "<group>";
@@ -103,21 +113,6 @@
 				2CE81A832BFD404300F2034B /* SpaceInvadersScene.swift */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		C786CDF02BE3F59900847B9F /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		C786CDF62BE4039200847B9F /* ble */ = {
-			isa = PBXGroup;
-			children = (
-				2CE81A812BFD11E700F2034B /* BleManager.swift */,
-			);
-			path = ble;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,6 +178,7 @@
 				C786CDF22BE3F73200847B9F /* MenuScene.sks in Resources */,
 				C786CDDA2BE3F48800847B9F /* GameScene.sks in Resources */,
 				C786CDE52BE3F48A00847B9F /* Assets.xcassets in Resources */,
+				2CACE1BA2BFE7F9A00CD4844 /* Explosion.sks in Resources */,
 				C786CDE82BE3F48A00847B9F /* LaunchScreen.storyboard in Resources */,
 				C786CDDC2BE3F48800847B9F /* Actions.sks in Resources */,
 			);
