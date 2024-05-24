@@ -4,8 +4,7 @@
 
 ## Link Video Explicativo App
 
-[](https://drive.google.com/file/d/1IOIUs2MWs6fDlU-Q35HeNj_BLhT-wp64/view?usp=sharing)
-
+[Video](https://drive.google.com/file/d/1IOIUs2MWs6fDlU-Q35HeNj_BLhT-wp64/view?usp=sharing)
 
 ## Nombre del alumno
 
@@ -59,12 +58,12 @@ class MenuScene: SKScene {
     override func didMove(to view: SKView) {
         // Configurar el fondo
         self.backgroundColor = SKColor(red: 209/255, green: 60/255, blue: 94/255, alpha: 1.0)
-    
+  
         // Configurar BLEManager
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             bleManager = appDelegate.bleManager
         }
-    
+  
         // Crear el título del juego
         titleLabel = SKLabelNode(text: "Space Invaders")
         titleLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 100)
@@ -72,7 +71,7 @@ class MenuScene: SKScene {
         titleLabel.fontColor = SKColor.white
         titleLabel.name = "titleLabel"
         self.addChild(titleLabel)
-    
+  
         // Crear el botón para iniciar el juego
         startGameButton = SKLabelNode(text: "Start Game")
         startGameButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY - 50)
@@ -80,10 +79,10 @@ class MenuScene: SKScene {
         startGameButton.fontColor = SKColor.white
         startGameButton.name = "startGameButton"
         self.addChild(startGameButton)
-    
+  
         // Animar el título
         animateTitle()
-    
+  
         // Animar el botón de iniciar juego
         animateStartGameButton()
     }
@@ -108,7 +107,7 @@ class MenuScene: SKScene {
         for touch in touches {
             let location = touch.location(in: self)
             let touchedNode = self.atPoint(location)
-        
+      
             if touchedNode.name == "startGameButton" {
                 loadGameScene()
             }
@@ -315,7 +314,7 @@ func updatePlayerPosition(data: CMDeviceMotion) {
     DispatchQueue.main.async {
         let xMovement = CGFloat(data.attitude.roll) * 500
         self.player.position.x += xMovement * CGFloat(self.motionManager.accelerometerUpdateInterval)
-      
+    
         // Asegurar que el jugador no se salga de los bordes de la pantalla
         self.player.position.x = max(min(self.player.position.x, self.size.width - self.player.size.width / 2), self.player.size.width / 2)
     }
@@ -375,7 +374,7 @@ El método receivedProjectileData(_:) recibe los datos de los proyectiles enviad
             projectile.physicsBody?.contactTestBitMask = 1 | 2 // Colisiona con el jugador y con proyectiles del jugador
             projectile.physicsBody?.collisionBitMask = 0
             self.addChild(projectile)
-          
+        
             let moveAction = SKAction.moveBy(x: 0, y: -self.frame.height, duration: 1.0)
             let removeAction = SKAction.removeFromParent()
             projectile.run(SKAction.sequence([moveAction, removeAction]))
@@ -426,7 +425,7 @@ func createExplosion(at position: CGPoint) {
     if let explosion = SKEmitterNode(fileNamed: "Explosion.sks") {
         explosion.position = position
         self.addChild(explosion)
-      
+    
         let fadeOutAction = SKAction.fadeOut(withDuration: 0.3) // Desvanece el emisor de partículas
         let removeAction = SKAction.removeFromParent()
         let sequenceAction = SKAction.sequence([fadeOutAction, removeAction])
@@ -484,7 +483,7 @@ El método returnToMenu() muestra un diálogo de confirmación antes de regresar
 func returnToMenu() {
     if let view = self.view, let viewController = view.window?.rootViewController {
         let alert = UIAlertController(title: "Confirm Exit", message: "Are you sure you want to return to the menu?", preferredStyle: .alert)
-      
+    
         let confirmAction = UIAlertAction(title: "Yes", style: .default) { _ in
             let transition = SKTransition.flipHorizontal(withDuration: 0.5)
             if let scene = MenuScene(fileNamed: "MenuScene") {
@@ -492,12 +491,12 @@ func returnToMenu() {
                 view.presentScene(scene, transition: transition)
             }
         }
-      
+    
         let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
-      
+    
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
-      
+    
         viewController.present(alert, animated: true, completion: nil)
     }
 }
