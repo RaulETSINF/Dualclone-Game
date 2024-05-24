@@ -2,6 +2,11 @@
 
 ![](assets/20240524_113945_Group_30-2.png)
 
+## Link Video Explicativo App
+
+[](https://drive.google.com/file/d/1IOIUs2MWs6fDlU-Q35HeNj_BLhT-wp64/view?usp=sharing)
+
+
 ## Nombre del alumno
 
 Raul Piqueras Melero
@@ -54,12 +59,12 @@ class MenuScene: SKScene {
     override func didMove(to view: SKView) {
         // Configurar el fondo
         self.backgroundColor = SKColor(red: 209/255, green: 60/255, blue: 94/255, alpha: 1.0)
-      
+    
         // Configurar BLEManager
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             bleManager = appDelegate.bleManager
         }
-      
+    
         // Crear el título del juego
         titleLabel = SKLabelNode(text: "Space Invaders")
         titleLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 100)
@@ -67,7 +72,7 @@ class MenuScene: SKScene {
         titleLabel.fontColor = SKColor.white
         titleLabel.name = "titleLabel"
         self.addChild(titleLabel)
-      
+    
         // Crear el botón para iniciar el juego
         startGameButton = SKLabelNode(text: "Start Game")
         startGameButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY - 50)
@@ -75,10 +80,10 @@ class MenuScene: SKScene {
         startGameButton.fontColor = SKColor.white
         startGameButton.name = "startGameButton"
         self.addChild(startGameButton)
-      
+    
         // Animar el título
         animateTitle()
-      
+    
         // Animar el botón de iniciar juego
         animateStartGameButton()
     }
@@ -103,7 +108,7 @@ class MenuScene: SKScene {
         for touch in touches {
             let location = touch.location(in: self)
             let touchedNode = self.atPoint(location)
-          
+        
             if touchedNode.name == "startGameButton" {
                 loadGameScene()
             }
@@ -284,7 +289,6 @@ extension Notification.Name {
 }
 ```
 
-
 ### SpaceInvadersScene
 
 `SpaceInvadersScene` es la escena principal del juego donde ocurre toda la acción. En esta escena, el jugador controla una nave espacial, puede disparar proyectiles y debe evitar los proyectiles del enemigo. La escena también maneja la comunicación Bluetooth para recibir datos de proyectiles del otro dispositivo.
@@ -292,6 +296,7 @@ extension Notification.Name {
 #### Configuración Inicial
 
 En el método `didMove(to:)`, se configuran varios elementos importantes:
+
 - El fondo de la escena.
 - La música de fondo.
 - La nave del jugador.
@@ -300,7 +305,6 @@ En el método `didMove(to:)`, se configuran varios elementos importantes:
 - El BLEManager para manejar la comunicación Bluetooth.
 - La etiqueta de vidas.
 - El botón de salida.
-
 
 ### Movimiento del Jugador
 
@@ -311,7 +315,7 @@ func updatePlayerPosition(data: CMDeviceMotion) {
     DispatchQueue.main.async {
         let xMovement = CGFloat(data.attitude.roll) * 500
         self.player.position.x += xMovement * CGFloat(self.motionManager.accelerometerUpdateInterval)
-        
+      
         // Asegurar que el jugador no se salga de los bordes de la pantalla
         self.player.position.x = max(min(self.player.position.x, self.size.width - self.player.size.width / 2), self.player.size.width / 2)
     }
@@ -322,15 +326,14 @@ func updatePlayerPosition(data: CMDeviceMotion) {
 
 El método shootProjectile() crea y dispara un proyectil desde la posición actual de la nave del jugador.
 
-
 ```swift
 func shootProjectile() {
     let projectileSize = CGSize(width: 15, height: 15)
     let projectile = SKSpriteNode(color: SKColor.white, size: projectileSize)
-    
+  
     // Posicionar el proyectil centrado pero un poco más adelante del jugador
     projectile.position = CGPoint(x: player.position.x, y: player.position.y + player.size.height / 2 + projectile.size.height)
-    
+  
     projectile.physicsBody = SKPhysicsBody(rectangleOf: projectile.size)
     projectile.physicsBody?.isDynamic = true
     projectile.physicsBody?.affectedByGravity = false
@@ -338,9 +341,9 @@ func shootProjectile() {
     projectile.physicsBody?.contactTestBitMask = 2 // Colisiona con proyectiles enemigos
     projectile.physicsBody?.collisionBitMask = 0
     self.addChild(projectile)
-    
+  
     self.run(shootSound)
-    
+  
     let moveAction = SKAction.moveBy(x: 0, y: self.frame.height, duration: 1.0)
     let removeAction = SKAction.run {
         // Invertir la coordenada x para el dispositivo receptor
@@ -354,11 +357,9 @@ func shootProjectile() {
 }
 ```
 
-
 ### Recepción de Proyectiles
 
 El método receivedProjectileData(_:) recibe los datos de los proyectiles enviados por el otro dispositivo y los crea en la escena.
-
 
 ```swift
 @objc func receivedProjectileData(_ notification: Notification) {
@@ -374,7 +375,7 @@ El método receivedProjectileData(_:) recibe los datos de los proyectiles enviad
             projectile.physicsBody?.contactTestBitMask = 1 | 2 // Colisiona con el jugador y con proyectiles del jugador
             projectile.physicsBody?.collisionBitMask = 0
             self.addChild(projectile)
-            
+          
             let moveAction = SKAction.moveBy(x: 0, y: -self.frame.height, duration: 1.0)
             let removeAction = SKAction.removeFromParent()
             projectile.run(SKAction.sequence([moveAction, removeAction]))
@@ -382,8 +383,6 @@ El método receivedProjectileData(_:) recibe los datos de los proyectiles enviad
     }
 }
 ```
-
-
 
 ### Manejo de Colisiones
 
@@ -393,7 +392,7 @@ El método didBegin(_:) maneja las colisiones entre los proyectiles y la nave de
 func didBegin(_ contact: SKPhysicsContact) {
     var firstBody: SKPhysicsBody
     var secondBody: SKPhysicsBody
-    
+  
     if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
         firstBody = contact.bodyA
         secondBody = contact.bodyB
@@ -401,7 +400,7 @@ func didBegin(_ contact: SKPhysicsContact) {
         firstBody = contact.bodyB
         secondBody = contact.bodyA
     }
-    
+  
     if firstBody.categoryBitMask == 1 && secondBody.categoryBitMask == 2 {
         if firstBody.node is SKSpriteNode {
             handlePlayerHit()
@@ -418,8 +417,6 @@ func didBegin(_ contact: SKPhysicsContact) {
 }
 ```
 
-
-
 ### Creación de Explosiones
 
 El método createExplosion(at:) crea una animación de explosión en la posición de la colisión.
@@ -429,7 +426,7 @@ func createExplosion(at position: CGPoint) {
     if let explosion = SKEmitterNode(fileNamed: "Explosion.sks") {
         explosion.position = position
         self.addChild(explosion)
-        
+      
         let fadeOutAction = SKAction.fadeOut(withDuration: 0.3) // Desvanece el emisor de partículas
         let removeAction = SKAction.removeFromParent()
         let sequenceAction = SKAction.sequence([fadeOutAction, removeAction])
@@ -437,7 +434,6 @@ func createExplosion(at position: CGPoint) {
     }
 }
 ```
-
 
 ### Manejo de Vidas y Game Over
 
@@ -447,10 +443,10 @@ El método handlePlayerHit() reduce las vidas del jugador y maneja la lógica de
 func handlePlayerHit() {
     lives -= 1
     livesLabel.text = "Vidas: \(lives)"
-    
+  
     // Reproducir sonido de invaderkilled
     self.run(invaderKilled)
-    
+  
     if lives <= 0 {
         gameOver()
     }
@@ -465,7 +461,7 @@ func gameOver() {
     gameOverLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
     gameOverLabel.zPosition = 100 // Asegurarse de que el texto esté al frente
     self.addChild(gameOverLabel)
-    
+  
     // Esperar 3 segundos y luego volver al menú
     let waitAction = SKAction.wait(forDuration: 3.0)
     let transitionAction = SKAction.run {
@@ -480,17 +476,15 @@ func gameOver() {
 }
 ```
 
-
 ### Botón de Salida
 
 El método returnToMenu() muestra un diálogo de confirmación antes de regresar al menú.
-
 
 ```swift
 func returnToMenu() {
     if let view = self.view, let viewController = view.window?.rootViewController {
         let alert = UIAlertController(title: "Confirm Exit", message: "Are you sure you want to return to the menu?", preferredStyle: .alert)
-        
+      
         let confirmAction = UIAlertAction(title: "Yes", style: .default) { _ in
             let transition = SKTransition.flipHorizontal(withDuration: 0.5)
             if let scene = MenuScene(fileNamed: "MenuScene") {
@@ -498,16 +492,17 @@ func returnToMenu() {
                 view.presentScene(scene, transition: transition)
             }
         }
-        
+      
         let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
-        
+      
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
-        
+      
         viewController.present(alert, animated: true, completion: nil)
     }
 }
 ```
 
 ### Dificultades encontradas
+
 Aunque estaba familiarizado con la tecnología Bluetooth BLE, nunca la había desarrollado para iOS. El mayor desafío que enfrenté fue encontrar dos dispositivos móviles Apple para probar la aplicación. La implementación y la gestión de permisos no presentaron problemas significativos, pero disponer de los dispositivos necesarios sí lo fue. Para futuros años, sería beneficioso que la práctica se enfocara en el uso de un solo dispositivo. De esta manera, se podría estudiar adecuadamente la tecnología Bluetooth BLE sin las complicaciones logísticas de encontrar múltiples dispositivos
