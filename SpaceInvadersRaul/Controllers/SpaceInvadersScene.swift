@@ -1,9 +1,3 @@
-//
-//  GameScene.swift
-//  SpaceInvadersRaul
-//
-//  Created by Raul Piqueras Melero on 21/5/24.
-//
 import SpriteKit
 import CoreMotion
 
@@ -13,11 +7,23 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
     var motionManager: CMMotionManager!
     var bleManager: BLEManager!
     var lastShootTime: TimeInterval = 0
-    var lives: Int = 100
+    var lives: Int = 5
+    var livesLabel: SKLabelNode!
+    var backgroundMusic: SKAudioNode!
+    
+    // Precargar el audio de disparo
+    let shootSound = SKAction.playSoundFileNamed("shoot.wav", waitForCompletion: false)
+    let invaderKilled = SKAction.playSoundFileNamed("invaderkilled.wav", waitForCompletion: false)
 
     override func didMove(to view: SKView) {
         // Configuración inicial de la escena
         self.backgroundColor = SKColor(red: 209/255, green: 60/255, blue: 94/255, alpha: 1.0)
+        
+        if let musicURL = Bundle.main.url(forResource: "music", withExtension: "mp3") {
+            backgroundMusic = SKAudioNode(url: musicURL)
+            backgroundMusic.autoplayLooped = true
+            addChild(backgroundMusic)
+        }
         
         // Configurar la nave del jugador
         let playerSize = CGSize(width: 50, height: 50)
@@ -60,6 +66,14 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(receivedProjectileData(_:)), name: .didReceiveProjectileData, object: nil)
+
+        // Configurar la etiqueta de vidas
+        livesLabel = SKLabelNode(text: "Vidas: \(lives)")
+        livesLabel.fontName = "Arial-BoldMT"
+        livesLabel.fontSize = 24
+        livesLabel.fontColor = .white
+        livesLabel.position = CGPoint(x: self.frame.minX + 80, y: self.frame.minY + 20)
+        self.addChild(livesLabel)
     }
     
     func updatePlayerPosition(data: CMDeviceMotion) {
@@ -74,7 +88,7 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let currentTime = CACurrentMediaTime()
-        if currentTime - lastShootTime > 1.0 {
+        if currentTime - lastShootTime > 0.5 {
             lastShootTime = currentTime
             shootProjectile()
         }
@@ -82,22 +96,26 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
     
     func shootProjectile() {
         let projectileSize = CGSize(width: 15, height: 15)
-        let projectile = SKSpriteNode(color: SKColor(red: 78/255, green: 169/255, blue: 87/255, alpha: 1.0), size: projectileSize)
+        let projectile = SKSpriteNode(color: SKColor.white, size: projectileSize)
         
-        // Posicionar el proyectil en el centro del jugador
-        projectile.position = CGPoint(x: player.position.x, y: player.position.y + player.size.height / 2 + projectile.size.height / 2)
-        
+        // Posicionar el proyectil centrado pero un poco más adelante del jugador
+         projectile.position = CGPoint(x: player.position.x, y: player.position.y + player.size.height / 2 + projectile.size.height)
+         
         projectile.physicsBody = SKPhysicsBody(rectangleOf: projectile.size)
         projectile.physicsBody?.isDynamic = true
         projectile.physicsBody?.affectedByGravity = false
-        projectile.physicsBody?.categoryBitMask = 4 // Categoría para proyectiles del jugador
+        projectile.physicsBody?.categoryBitMask = 2 // Categoría para proyectiles del jugador
         projectile.physicsBody?.contactTestBitMask = 2 // Colisiona con proyectiles enemigos
         projectile.physicsBody?.collisionBitMask = 0
         self.addChild(projectile)
         
+        self.run(shootSound)
+        
         let moveAction = SKAction.moveBy(x: 0, y: self.frame.height, duration: 1.0)
         let removeAction = SKAction.run {
-            if let projectileData = try? JSONEncoder().encode(["x": projectile.position.x, "y": projectile.position.y]) {
+            // Invertir la coordenada x para el dispositivo receptor
+            let invertedX = self.frame.width - projectile.position.x
+            if let projectileData = try? JSONEncoder().encode(["x": invertedX, "y": projectile.position.y]) {
                 self.bleManager.sendProjectileData(projectileData)
             }
             projectile.removeFromParent()
@@ -109,13 +127,13 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
         if let data = notification.object as? Data {
             if let projectileInfo = try? JSONDecoder().decode([String: CGFloat].self, from: data) {
                 let projectileSize = CGSize(width: 15, height: 15)
-                let projectile = SKSpriteNode(color: SKColor.white, size: projectileSize)
+                let projectile = SKSpriteNode(color: SKColor(red: 78/255, green: 169/255, blue: 87/255, alpha: 1.0), size: projectileSize)
                 projectile.position = CGPoint(x: projectileInfo["x"]!, y: self.frame.maxY)
                 projectile.physicsBody = SKPhysicsBody(rectangleOf: projectile.size)
                 projectile.physicsBody?.isDynamic = true
                 projectile.physicsBody?.affectedByGravity = false
                 projectile.physicsBody?.categoryBitMask = 2 // Categoría para proyectiles del enemigo
-                projectile.physicsBody?.contactTestBitMask = 1 | 4 // Colisiona con el jugador y con proyectiles del jugador
+                projectile.physicsBody?.contactTestBitMask = 1 | 2 // Colisiona con el jugador y con proyectiles del jugador
                 projectile.physicsBody?.collisionBitMask = 0
                 self.addChild(projectile)
                 
@@ -144,9 +162,8 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
                 createExplosion(at: contact.contactPoint)
             }
             secondBody.node?.removeFromParent()
-        } else if firstBody.categoryBitMask == 4 && secondBody.categoryBitMask == 2 {
+        } else if firstBody.categoryBitMask == 2 && secondBody.categoryBitMask == 2 {
             // Proyectil del jugador colisiona con proyectil enemigo
-            print("Explosion creada")
             createExplosion(at: contact.contactPoint)
             firstBody.node?.removeFromParent()
             secondBody.node?.removeFromParent()
@@ -154,18 +171,24 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func createExplosion(at position: CGPoint) {
-        let explosion = SKEmitterNode(fileNamed: "Explosion.sks")!
-        explosion.position = position
-        self.addChild(explosion)
-        
-        let fadeOutAction = SKAction.fadeOut(withDuration: 0.3) // Desvanece el emisor de partículas
-        let removeAction = SKAction.removeFromParent()
-        let sequenceAction = SKAction.sequence([fadeOutAction, removeAction])
-        explosion.run(sequenceAction)
+        if let explosion = SKEmitterNode(fileNamed: "Explosion.sks") {
+            explosion.position = position
+            self.addChild(explosion)
+            
+            let fadeOutAction = SKAction.fadeOut(withDuration: 0.3) // Desvanece el emisor de partículas
+            let removeAction = SKAction.removeFromParent()
+            let sequenceAction = SKAction.sequence([fadeOutAction, removeAction])
+            explosion.run(sequenceAction)
+        }
     }
 
     func handlePlayerHit() {
         lives -= 1
+        livesLabel.text = "Vidas: \(lives)"
+        
+        // Reproducir sonido de invaderkilled
+        self.run(invaderKilled)
+        
         if lives <= 0 {
             gameOver()
         }
@@ -174,6 +197,7 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
     func gameOver() {
         let transition = SKTransition.flipHorizontal(withDuration: 0.5)
         if let scene = MenuScene(fileNamed: "MenuScene") {
+            scene.scaleMode = .resizeFill
             self.view?.presentScene(scene, transition: transition)
         }
     }
