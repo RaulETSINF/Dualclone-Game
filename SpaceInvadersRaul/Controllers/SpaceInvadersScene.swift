@@ -10,13 +10,15 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
     var lives: Int = 5
     var livesLabel: SKLabelNode!
     var backgroundMusic: SKAudioNode!
+    var exitButton: SKLabelNode!
     
-    // Precargar el audio de disparo
     let shootSound = SKAction.playSoundFileNamed("shoot.wav", waitForCompletion: false)
     let invaderKilled = SKAction.playSoundFileNamed("invaderkilled.wav", waitForCompletion: false)
-
+    let proyectile = SKAction.playSoundFileNamed("proyectile", waitForCompletion: false)
+    
+    
     override func didMove(to view: SKView) {
-        // Configuración inicial de la escena
+        
         self.backgroundColor = SKColor(red: 209/255, green: 60/255, blue: 94/255, alpha: 1.0)
         
         if let musicURL = Bundle.main.url(forResource: "music", withExtension: "mp3") {
@@ -32,7 +34,7 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
         playerShape.strokeColor = .white
         playerShape.lineWidth = 5
         playerShape.fillColor = .clear
-
+        
         player = SKSpriteNode(color: .clear, size: playerSize)
         playerShape.position = CGPoint(x: -playerSize.width / 2, y: -playerSize.height / 2)
         player.addChild(playerShape)
@@ -58,7 +60,7 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
             guard let data = motionData else { return }
             self.updatePlayerPosition(data: data)
         }
-
+        
         // Configurar BLEManager
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             bleManager = appDelegate.bleManager
@@ -66,7 +68,7 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(receivedProjectileData(_:)), name: .didReceiveProjectileData, object: nil)
-
+        
         // Configurar la etiqueta de vidas
         livesLabel = SKLabelNode(text: "Vidas: \(lives)")
         livesLabel.fontName = "Arial-BoldMT"
@@ -74,6 +76,15 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
         livesLabel.fontColor = .white
         livesLabel.position = CGPoint(x: self.frame.minX + 80, y: self.frame.minY + 20)
         self.addChild(livesLabel)
+        
+        // Configurar el botón de salida
+        exitButton = SKLabelNode(text: "Exit")
+        exitButton.fontName = "Arial-BoldMT"
+        exitButton.fontSize = 24
+        exitButton.fontColor = .white
+        exitButton.position = CGPoint(x: self.frame.maxX - 80, y: self.frame.minY + 20)
+        exitButton.name = "exitButton"
+        self.addChild(exitButton)
     }
     
     func updatePlayerPosition(data: CMDeviceMotion) {
@@ -87,20 +98,28 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let currentTime = CACurrentMediaTime()
-        if currentTime - lastShootTime > 0.5 {
-            lastShootTime = currentTime
-            shootProjectile()
+        for touch in touches {
+            let location = touch.location(in: self)
+            let touchedNode = self.atPoint(location)
+            
+            if touchedNode.name == "exitButton" {
+                returnToMenu()
+            }
+            
+            let currentTime = CACurrentMediaTime()
+            if currentTime - lastShootTime > 0.5 {
+                lastShootTime = currentTime
+                shootProjectile()
+            }
         }
     }
-    
     func shootProjectile() {
         let projectileSize = CGSize(width: 15, height: 15)
         let projectile = SKSpriteNode(color: SKColor.white, size: projectileSize)
         
         // Posicionar el proyectil centrado pero un poco más adelante del jugador
-         projectile.position = CGPoint(x: player.position.x, y: player.position.y + player.size.height / 2 + projectile.size.height)
-         
+        projectile.position = CGPoint(x: player.position.x, y: player.position.y + player.size.height / 2 + projectile.size.height)
+        
         projectile.physicsBody = SKPhysicsBody(rectangleOf: projectile.size)
         projectile.physicsBody?.isDynamic = true
         projectile.physicsBody?.affectedByGravity = false
@@ -122,7 +141,7 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
         }
         projectile.run(SKAction.sequence([moveAction, removeAction]))
     }
-
+    
     @objc func receivedProjectileData(_ notification: Notification) {
         if let data = notification.object as? Data {
             if let projectileInfo = try? JSONDecoder().decode([String: CGFloat].self, from: data) {
@@ -143,7 +162,7 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-
+    
     func didBegin(_ contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
@@ -165,11 +184,12 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
         } else if firstBody.categoryBitMask == 2 && secondBody.categoryBitMask == 2 {
             // Proyectil del jugador colisiona con proyectil enemigo
             createExplosion(at: contact.contactPoint)
+            self.run(proyectile)
             firstBody.node?.removeFromParent()
             secondBody.node?.removeFromParent()
         }
     }
-
+    
     func createExplosion(at position: CGPoint) {
         if let explosion = SKEmitterNode(fileNamed: "Explosion.sks") {
             explosion.position = position
@@ -181,7 +201,7 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
             explosion.run(sequenceAction)
         }
     }
-
+    
     func handlePlayerHit() {
         lives -= 1
         livesLabel.text = "Vidas: \(lives)"
@@ -193,12 +213,52 @@ class SpaceInvadersScene: SKScene, SKPhysicsContactDelegate {
             gameOver()
         }
     }
-
+    
     func gameOver() {
-        let transition = SKTransition.flipHorizontal(withDuration: 0.5)
-        if let scene = MenuScene(fileNamed: "MenuScene") {
-            scene.scaleMode = .resizeFill
-            self.view?.presentScene(scene, transition: transition)
+        // Crear el nodo de texto "Game Over"
+        let gameOverLabel = SKLabelNode(text: "Game Over")
+        gameOverLabel.fontName = "Arial-BoldMT"
+        gameOverLabel.fontSize = 48
+        gameOverLabel.fontColor = .white
+        gameOverLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        gameOverLabel.zPosition = 100 // Asegurarse de que el texto esté al frente
+        self.addChild(gameOverLabel)
+        
+        // Esperar 3 segundos y luego volver al menú
+        let waitAction = SKAction.wait(forDuration: 3.0)
+        let transitionAction = SKAction.run {
+            let transition = SKTransition.flipHorizontal(withDuration: 0.5)
+            if let scene = MenuScene(fileNamed: "MenuScene") {
+                scene.scaleMode = .fill
+                self.view?.presentScene(scene, transition: transition)
+            }
+        }
+        let sequence = SKAction.sequence([waitAction, transitionAction])
+        self.run(sequence)
+    }
+
+    // Dentro de tu clase SpaceInvadersScene
+    func returnToMenu() {
+        if let view = self.view, let viewController = view.window?.rootViewController {
+            let alert = UIAlertController(title: "Confirm Exit", message: "Are you sure you want to return to the menu?", preferredStyle: .alert)
+            
+            let confirmAction = UIAlertAction(title: "Yes", style: .default) { _ in
+                let transition = SKTransition.flipHorizontal(withDuration: 0.5)
+                if let scene = MenuScene(fileNamed: "MenuScene") {
+                    scene.scaleMode = .fill
+                    view.presentScene(scene, transition: transition)
+                }
+            }
+            
+            let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+            
+            alert.addAction(confirmAction)
+            alert.addAction(cancelAction)
+            
+            viewController.present(alert, animated: true, completion: nil)
         }
     }
+
+    
+    
 }

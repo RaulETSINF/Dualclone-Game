@@ -1,3 +1,38 @@
+# Proyecto Space Invaders
+
+## Nombre del alumno
+Raul Piqueras Melero
+
+## Descripción general del proyecto
+El proyecto consiste en la creación de un clon del juego "Dual" con temática de "Space Invaders". El juego se juega en modo multijugador local utilizando Bluetooth para la comunicación entre dispositivos. Los jugadores controlan naves espaciales que pueden moverse y disparar proyectiles. Los disparos que salen de la pantalla de un dispositivo aparecen en la pantalla del otro dispositivo. El objetivo es destruir la nave del oponente mientras se evita ser golpeado por sus disparos.
+
+## Funcionalidades y clases de la aplicación
+
+### MenuScene
+
+`MenuScene` es la escena inicial del juego, que presenta un menú donde los jugadores pueden iniciar el juego. Aquí se configuran las siguientes funcionalidades:
+
+1. **Configuración del fondo:**
+   - Se establece un color de fondo consistente con el tema del juego.
+
+2. **Configuración de BLEManager:**
+   - Se inicializa el `BLEManager` para gestionar la comunicación Bluetooth.
+
+3. **Título del juego:**
+   - Se crea y anima el título "Space Invaders" que se muestra en el centro de la pantalla.
+
+4. **Botón de inicio del juego:**
+   - Se crea y anima un botón de "Start Game" que permite a los jugadores comenzar la partida.
+
+5. **Animaciones:**
+   - `animateTitle()`: Anima el título del juego con un efecto de escalado.
+   - `animateStartGameButton()`: Anima el botón de inicio con un efecto de pulsación.
+
+6. **Detección de toques:**
+   - `touchesBegan`: Detecta cuando el usuario toca el botón de "Start Game" y carga la escena del juego (`SpaceInvadersScene`).
+
+#### Código de MenuScene
+```swift
 import Foundation
 import SpriteKit
 import CoreBluetooth
