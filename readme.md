@@ -501,7 +501,3 @@ func returnToMenu() {
     }
 }
 ```
-
-### Dificultades encontradas
-
-Aunque estaba familiarizado con la tecnología Bluetooth BLE, nunca la había desarrollado para iOS. El mayor desafío que enfrenté fue encontrar dos dispositivos móviles Apple para probar la aplicación. La implementación y la gestión de permisos no presentaron problemas significativos, pero disponer de los dispositivos necesarios sí lo fue. Para futuros años, sería beneficioso que la práctica se enfocara en el uso de un solo dispositivo. De esta manera, se podría estudiar adecuadamente la tecnología Bluetooth BLE sin las complicaciones logísticas de encontrar múltiples dispositivos
